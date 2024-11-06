@@ -8,12 +8,193 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/app_title"
+        app:layout_constraintTop_toTopOf="@id/main"
+        app:layout_constraintEnd_toEndOf="@id/main"
+        app:layout_constraintStart_toStartOf="@id/main"
+        android:layout_marginTop="60dp"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        android:textColor="@color/green" />
+
+    <TextView
+        android:id="@+id/logradouro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_logradouro"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edit_logradouro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@id/logradouro"
+        app:layout_constraintTop_toBottomOf="@id/logradouro"
+        android:textSize="15sp"
+        android:inputType="textCapSentences"
+        android:hint="@string/app_edit_logradouro"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp" />
+
+    <TextView
+        android:id="@+id/bairro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_bairro"
+        app:layout_constraintTop_toBottomOf="@id/edit_logradouro"
+        app:layout_constraintStart_toStartOf="@id/title"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edit_bairro"
+        android:layout_width="match_parent"
+        android:minHeight="48dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/bairro"
+        app:layout_constraintTop_toBottomOf="@id/bairro"
+        android:textSize="15sp"
+        android:inputType="textCapSentences"
+        android:hint="@string/app_edit_bairro"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="200dp" />
+
+    <TextView
+        android:id="@+id/numero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_numero"
+        app:layout_constraintTop_toBottomOf="@id/edit_logradouro"
+        app:layout_constraintStart_toStartOf="@id/title"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="170dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edit_numero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@id/bairro"
+        app:layout_constraintTop_toBottomOf="@id/bairro"
+        android:textSize="15sp"
+        android:hint="@string/app_edit_numero"
+        android:layout_marginStart="230dp"
+        android:layout_marginEnd="60dp"
+        android:inputType="number"
+        android:maxLength="6" />
+
+    <TextView
+        android:id="@+id/cidade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_cidade"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/edit_bairro"
+        android:layout_marginTop="20dp" />
+
+    <EditText
+        android:id="@+id/edit_cidade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@id/cidade"
+        app:layout_constraintTop_toBottomOf="@id/cidade"
+        android:textSize="15sp"
+        android:inputType="textCapSentences"
+        android:hint="@string/app_edit_cidade"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="200dp" />
+
+    <TextView
+        android:id="@+id/uf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_uf"
+        app:layout_constraintTop_toBottomOf="@id/edit_numero"
+        app:layout_constraintStart_toStartOf="@id/title"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="170dp"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinner_uf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@id/uf"
+        app:layout_constraintTop_toBottomOf="@id/uf"
+        android:layout_marginStart="230dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="7dp" />
+
+    <Button
+        android:id="@+id/buscarCep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_btn_buscarCep"
+        android:textColor="@color/white"
+        android:textSize="26sp"
+        android:backgroundTint="@color/green"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintEnd_toEndOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/edit_cidade"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:id="@+id/cepTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_cepTitle"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        app:layout_constraintTop_toBottomOf="@id/buscarCep"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintEnd_toEndOf="@id/title"
+        android:layout_marginTop="25dp" />
+
+    <TextView
+        android:id="@+id/cep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cep_background"
+        android:textColor="@color/white"
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintEnd_toEndOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/cepTitle"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:text="@string/app_cep"
+        android:textSize="35sp"
+        />
+
+    <Button
+        android:id="@+id/copiarCep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_copiarCep"
+        android:backgroundTint="@color/green"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintEnd_toEndOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/cep"
+        android:layout_marginTop="10dp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

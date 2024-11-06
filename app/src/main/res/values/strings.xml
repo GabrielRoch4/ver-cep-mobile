@@ -1,3 +1,49 @@
 <resources>
     <string name="app_name">VerCEP</string>
+    <string name="app_title">Descubra seu CEP</string>
+    <string name="app_logradouro">Logradouro</string>
+    <string name="app_edit_logradouro">Rua/Avenida</string>
+    <string name="app_bairro">Bairro</string>
+    <string name="app_edit_bairro">Nome do bairro</string>
+    <string name="app_numero">Número</string>
+    <string name="app_edit_numero">1000</string>
+    <string name="app_cidade">Cidade</string>
+    <string name="app_edit_cidade">Patrocínio</string>
+    <string name="app_uf">Estado</string>
+    <string name="app_edit_uf">MG</string>
+
+    <string-array name="brazilian_states">
+        <item>AC</item>
+        <item>AL</item>
+        <item>AP</item>
+        <item>AM</item>
+        <item>BA</item>
+        <item>CE</item>
+        <item>DF</item>
+        <item>ES</item>
+        <item>GO</item>
+        <item>MA</item>
+        <item>MT</item>
+        <item>MS</item>
+        <item>MG</item>
+        <item>PA</item>
+        <item>PB</item>
+        <item>PR</item>
+        <item>PE</item>
+        <item>PI</item>
+        <item>RJ</item>
+        <item>RN</item>
+        <item>RS</item>
+        <item>RO</item>
+        <item>RR</item>
+        <item>SC</item>
+        <item>SP</item>
+        <item>SE</item>
+        <item>TO</item>
+    </string-array>
+
+    <string name="app_cepTitle">CEP econtrado</string>
+    <string name="app_btn_buscarCep">Buscar</string>
+    <string name="app_cep">38742-758</string>
+    <string name="app_copiarCep">Copiar</string>
 </resources>
