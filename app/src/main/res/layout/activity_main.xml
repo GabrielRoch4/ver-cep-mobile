@@ -161,7 +161,6 @@
         android:text="@string/app_cepTitle"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@color/green"
         app:layout_constraintTop_toBottomOf="@id/buscarCep"
         app:layout_constraintStart_toStartOf="@id/title"
         app:layout_constraintEnd_toEndOf="@id/title"

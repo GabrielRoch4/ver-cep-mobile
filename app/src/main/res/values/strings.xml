@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">VerCEP</string>
-    <string name="app_title">Descubra seu CEP</string>
+    <string name="app_title">Encontre seu CEP</string>
     <string name="app_logradouro">Logradouro</string>
     <string name="app_edit_logradouro">Rua/Avenida</string>
     <string name="app_bairro">Bairro</string>

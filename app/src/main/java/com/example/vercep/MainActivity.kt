@@ -1,39 +1,18 @@
 package com.example.vercep
+
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import retrofit2.*
+import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity() : AppCompatActivity(), Parcelable {
-
-    constructor(parcel: Parcel) : this() {
-    }
-
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    companion object CREATOR : Parcelable.Creator<MainActivity> {
-        override fun createFromParcel(parcel: Parcel): MainActivity {
-            return MainActivity(parcel)
-        }
-
-        override fun newArray(size: Int): Array<MainActivity?> {
-            return arrayOfNulls(size)
-        }
-    }
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,50 +44,68 @@ class MainActivity() : AppCompatActivity(), Parcelable {
             spinnerUf.adapter = adapter
         }
 
-        // Configura um listener para verificar a seleção
-        spinnerUf.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                val selectedState = parent.getItemAtPosition(position).toString()
-                if (selectedState == "Selecione um estado") {
-                    // Nenhum estado foi selecionado, mostra uma dica ou faz algo
-                } else {
-                    // Um estado foi selecionado
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Estado selecionado: $selectedState",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // Nenhuma ação necessária aqui
+        editCidade.setOnEditorActionListener { v, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                esconderTeclado(v)
+                v.clearFocus()
+                true
+            } else {
+                false
             }
         }
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://viacep.com.br/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val viaCepService = retrofit.create(ViaCepService::class.java)
 
         buscarCepButton.setOnClickListener {
-            // Verificar se todos os campos estão preenchidos
             val logradouro = editLogradouro.text.toString()
-            val bairro = editBairro.text.toString()
-            val numero = editNumero.text.toString()
             val cidade = editCidade.text.toString()
+            val uf = spinnerUf.selectedItem.toString()
 
-            if (logradouro.isNotEmpty() && bairro.isNotEmpty() && numero.isNotEmpty() && cidade.isNotEmpty()) {
-                // Simular a busca do CEP (aqui você implementaria a busca real)
+            if (logradouro.isNotEmpty() && cidade.isNotEmpty() && uf.isNotEmpty()) {
+                val call = viaCepService.buscarCep(uf, cidade, logradouro)
 
-                // Exibir os elementos "CEP" após encontrar o CEP
-                cepTitle.visibility = View.VISIBLE
-                cep.visibility = View.VISIBLE
-                copiarCepButton.visibility = View.VISIBLE
+                call.enqueue(object : Callback<List<CepResponse>> {
+                    override fun onResponse(call: Call<List<CepResponse>>, response: Response<List<CepResponse>>) {
+                        if (response.isSuccessful) {
+                            val cepResponse = response.body()?.firstOrNull()
+                            if (cepResponse != null) {
+                                cep.text = cepResponse.cep
+                                cepTitle.visibility = View.VISIBLE
+                                cep.visibility = View.VISIBLE
+                                copiarCepButton.visibility = View.VISIBLE
+                                copiarCepButton.setOnClickListener {
+                                    copiarParaAreaDeTransferencia(this@MainActivity, cep.text.toString())
+                                }
+                            } else {
+                                Toast.makeText(this@MainActivity, "CEP não encontrado", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<List<CepResponse>>, t: Throwable) {
+                        Toast.makeText(this@MainActivity, "Erro na busca do CEP", Toast.LENGTH_SHORT).show()
+                    }
+                })
             } else {
-                Toast.makeText(this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Por favor, preencha todos os campos", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun copiarParaAreaDeTransferencia(context: Context, texto: String) {
+        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("texto", texto)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(context, "Texto copiado para a área de transferência", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun esconderTeclado(view: View) {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
